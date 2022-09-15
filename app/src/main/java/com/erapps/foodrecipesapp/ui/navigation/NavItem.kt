@@ -15,12 +15,14 @@ sealed class NavItem(
 
     val args = navArgs.map { navArgument(name = it.key) { type = it.argType } }
 
-    //botton navigation
+    //bottom navigation
     object Search: NavItem("search")
     object Category: NavItem("category")
     object Random: NavItem("random")
     //details navigation
-    object Details: NavItem("details")
+    object Details: NavItem("details", listOf(NavArgs.MealId))
 }
 
-enum class NavArgs(val key: String, val argType: NavType<*>) {}
+enum class NavArgs(val key: String, val argType: NavType<*>) {
+    MealId("mealId", NavType.StringType)
+}
