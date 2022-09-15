@@ -25,12 +25,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'TheMealDB_Api_Base_URL', '"www.themealdb.com/api/json/v1/1/"'
+            buildConfigField 'String', 'TheMealDB_Api_Base_URL', '"https://www.themealdb.com/api/json/v1/1/"'
         }
         debug{
             versionNameSuffix '-debug'
             applicationIdSuffix '.debug'
-            buildConfigField 'String', 'TheMealDB_Api_Base_URL', '"www.themealdb.com/api/json/v1/1/"'
+            buildConfigField 'String', 'TheMealDB_Api_Base_URL', '"https://www.themealdb.com/api/json/v1/1/"'
         }
     }
     compileOptions {
@@ -58,7 +58,7 @@ ext{
     coreKtxVersion = '1.9.0'
     lifecycleVersion = '2.4.1'
     activityCompose = '1.5.1'
-    navigationCompose = '2.5.1'
+    navigationCompose = '2.5.2'
     // Google
     materialVersion = '1.6.1'
     gsonVersion = '2.9.0'
@@ -80,6 +80,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
     implementation "androidx.activity:activity-compose:$activityCompose"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation "androidx.navigation:navigation-compose:$navigationCompose"
     //hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"

@@ -1,4 +1,4 @@
-package com.erapps.foodrecipesapp
+package com.erapps.foodrecipesapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

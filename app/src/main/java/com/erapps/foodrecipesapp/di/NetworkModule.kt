@@ -1,6 +1,7 @@
 package com.erapps.foodrecipesapp.di
 
 import com.erapps.foodrecipesapp.BuildConfig
+import com.erapps.foodrecipesapp.data.api.NetworkResponseAdapterFactory
 import com.erapps.foodrecipesapp.data.api.TheMealDBApiService
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -55,7 +56,7 @@ object NetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.TheMealDB_Api_Base_URL)
-            //.addCallAdapterFactory(NetworkResponseAdapterFactory())
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .addConverterFactory(gsonConverterFactory)
             .client(okHttpClient)
             .build()

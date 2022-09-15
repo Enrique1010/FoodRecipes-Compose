@@ -16,7 +16,9 @@ fun NavGraph(navController: NavHostController) {
 
     NavHost(navController = navController, startDestination = NavItem.Search.route) {
         composable(NavItem.Search) {
-            SearchRecipesScreen()
+            SearchRecipesScreen(){
+                navController.navigate(NavItem.Details.createDetailsRoute(it))
+            }
         }
         composable(NavItem.Category){
             SearchRecipesByCategoryScreen()

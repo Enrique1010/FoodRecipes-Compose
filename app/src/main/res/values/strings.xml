@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FoodRecipesApp</string>
+    <!--Errors-->
+    <string name="error_server">Error connecting to the server, please try again later.</string>
+    <string name="timeout_error">The connection to the server timed out, please try again.</string>
+    <string name="unknown_error">An unexpected error has occurred, please try again later.</string>
 </resources>
