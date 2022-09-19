@@ -8,6 +8,7 @@ import com.erapps.foodrecipesapp.data.Result
 import com.erapps.foodrecipesapp.data.source.RandomScreenRepository
 import com.erapps.foodrecipesapp.ui.shared.UiState
 import com.erapps.foodrecipesapp.ui.shared.mapErrors
+import com.erapps.foodrecipesapp.ui.shared.mapResultToUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -24,16 +25,11 @@ class RandomRecipeScreenViewModel @Inject constructor(
     fun getRandomRecipe() = viewModelScope.launch {
 
         randomScreenRepository.getRandomRecipe().collect { result ->
-            when(result){
-                Result.Loading -> _uiState.value = UiState.Loading
-                is Result.Error -> mapErrors(result, _uiState)
-                is Result.Success -> {
-                    val meal = result.data?.meals?.get(0)
+            mapResultToUiState(result, _uiState) { response ->
+                val meal = response.meals?.get(0)
 
-                    meal?.let {
-                        _uiState.value = UiState.Success(it)
-                        return@collect
-                    }
+                meal?.let {
+                    _uiState.value = UiState.Success(it)
                 }
             }
         }

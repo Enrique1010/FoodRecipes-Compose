@@ -6,11 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.erapps.foodrecipesapp.data.Result
 import com.erapps.foodrecipesapp.data.models.Meal
 import com.erapps.foodrecipesapp.data.source.DetailsRepository
 import com.erapps.foodrecipesapp.ui.shared.UiState
-import com.erapps.foodrecipesapp.ui.shared.mapErrors
+import com.erapps.foodrecipesapp.ui.shared.mapResultToUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,17 +32,12 @@ class DetailsScreenViewModel @Inject constructor(
     fun getRecipeById(id: String) = viewModelScope.launch {
 
         detailsRepository.getRecipeById(id).collect { result ->
-            when (result) {
-                Result.Loading -> _uiState.value = UiState.Loading
-                is Result.Error -> mapErrors(result, _uiState)
-                is Result.Success -> {
-                    val meal = result.data?.meals?.get(0)
+            mapResultToUiState(result, _uiState) { response ->
+                val meal = response.meals?.get(0)
 
-                    meal?.let {
-                        _ingredientsList.value = createIngredientsList(it).toMutableList()
-                        _uiState.value = UiState.Success(it)
-                        return@collect
-                    }
+                meal?.let {
+                    _ingredientsList.value = createIngredientsList(it).toMutableList()
+                    _uiState.value = UiState.Success(it)
                 }
             }
         }

@@ -4,10 +4,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.erapps.foodrecipesapp.data.Result
 import com.erapps.foodrecipesapp.data.source.SearchDefaultRepository
 import com.erapps.foodrecipesapp.ui.shared.UiState
-import com.erapps.foodrecipesapp.ui.shared.mapErrors
+import com.erapps.foodrecipesapp.ui.shared.mapResultToUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,22 +22,15 @@ class SearchScreenViewModel @Inject constructor(
     fun searchRecipesByName(name: String) = viewModelScope.launch {
 
         searchDefaultRepository.searchRecipesByName(name).collect { result ->
-            when (result) {
-                is Result.Loading -> _uiState.value = UiState.Loading
-                is Result.Error -> mapErrors(result, _uiState)
-                is Result.Success -> {
-                    val meals = result.data?.meals
+            mapResultToUiState(result, _uiState) { response ->
+                val meals = response.meals
 
-                    if (meals?.size == 0 || result.data?.meals == null) {
-                        _uiState.value = UiState.Empty
-                        return@collect
-                    }
-                    //success code
-                    meals?.let {
-                        _uiState.value = UiState.Success(it)
-                        return@collect
-                    }
+                if (meals?.size == 0 || meals == null) {
+                    _uiState.value = UiState.Empty
+                    return@mapResultToUiState
                 }
+
+                _uiState.value = UiState.Success(meals)
             }
         }
     }

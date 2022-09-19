@@ -5,6 +5,18 @@ import com.erapps.foodrecipesapp.R
 import com.erapps.foodrecipesapp.data.Result
 import java.net.SocketTimeoutException
 
+fun <T, E> mapResultToUiState(
+    result: Result<T, E>,
+    uiState: MutableState<UiState?>,
+    successBlock: (T) -> Unit
+) {
+    when(result) {
+        is Result.Error -> mapErrors(result, uiState)
+        Result.Loading -> uiState.value = UiState.Loading
+        is Result.Success -> successBlock(result.data!!)
+    }
+}
+
 fun mapErrors(result: Result.Error<*>, uiState: MutableState<UiState?>) {
     when {
         result.isApiError -> {

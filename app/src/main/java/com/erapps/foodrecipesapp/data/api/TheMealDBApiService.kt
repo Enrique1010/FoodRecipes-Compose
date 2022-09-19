@@ -1,6 +1,5 @@
 package com.erapps.foodrecipesapp.data.api
 
-import com.erapps.foodrecipesapp.data.models.GetCategoriesResponse
 import com.erapps.foodrecipesapp.data.models.GetRecipesByCategoryResponse
 import com.erapps.foodrecipesapp.data.models.SearchRecipesResponse
 import retrofit2.http.GET
@@ -25,9 +24,4 @@ interface TheMealDBApiService {
     suspend fun getRecipesByCategory(
         @Query("c") category: String
     ): NetworkResponse<GetRecipesByCategoryResponse, *>
-
-    @GET("list.php")
-    suspend fun getFoodCategories(
-        @Query("c") query: String = "list"
-    ): NetworkResponse<GetCategoriesResponse, *>
 }
