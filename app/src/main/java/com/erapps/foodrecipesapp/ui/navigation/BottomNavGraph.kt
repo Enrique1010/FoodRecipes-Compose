@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.erapps.foodrecipesapp.ui.screens.bycategory.SearchRecipesByCategoryScreen
-import com.erapps.foodrecipesapp.ui.screens.details.RecipeDetailsScreen
+import com.erapps.foodrecipesapp.ui.screens.details.DetailsScreen
 import com.erapps.foodrecipesapp.ui.screens.random.RandomRecipeScreen
 import com.erapps.foodrecipesapp.ui.screens.search.SearchRecipesScreen
 
@@ -21,15 +21,19 @@ fun NavGraph(navController: NavHostController) {
             }
         }
         composable(NavItem.Category){
-            SearchRecipesByCategoryScreen()
+            SearchRecipesByCategoryScreen() {
+                navController.navigate(NavItem.Details.createDetailsRoute(it))
+            }
         }
         composable(NavItem.Random){
-            RandomRecipeScreen()
+            RandomRecipeScreen() {
+                navController.navigate(NavItem.Details.createDetailsRoute(it))
+            }
         }
         composable(NavItem.Details) {
             val mealId = it.arguments?.getString("mealId").toString()
 
-            RecipeDetailsScreen(mealId = mealId) {
+            DetailsScreen(mealId = mealId) {
                 navController.popBackStack()
             }
         }

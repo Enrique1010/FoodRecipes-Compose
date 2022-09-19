@@ -4,6 +4,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun SearchRecipesByCategoryScreen() {
+fun SearchRecipesByCategoryScreen(onRecipeClick: (String) -> Unit) {
     Text(text = "category")
 }

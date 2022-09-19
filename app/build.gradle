@@ -26,11 +26,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'TheMealDB_Api_Base_URL', '"https://www.themealdb.com/api/json/v1/1/"'
+            buildConfigField 'String', 'TheMealDB_Ingredients_Images_URL', '"https://www.themealdb.com/images/ingredients"'
         }
         debug{
             versionNameSuffix '-debug'
             applicationIdSuffix '.debug'
             buildConfigField 'String', 'TheMealDB_Api_Base_URL', '"https://www.themealdb.com/api/json/v1/1/"'
+            buildConfigField 'String', 'TheMealDB_Ingredients_Images_URL', '"https://www.themealdb.com/images/ingredients"'
         }
     }
     compileOptions {
@@ -69,6 +71,8 @@ ext{
     okhttpInterceptorVersion = '5.0.0-alpha.8'
     //coil
     coilVersion = '2.1.0'
+    //palette
+    paletteVersion = '1.0.0'
 }
 
 dependencies {
@@ -95,6 +99,8 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpInterceptorVersion"
     //coil
     implementation("io.coil-kt:coil-compose:$coilVersion")
+    //palette
+    implementation "androidx.palette:palette:$paletteVersion"
 
     //testing
     testImplementation 'junit:junit:4.13.2'
