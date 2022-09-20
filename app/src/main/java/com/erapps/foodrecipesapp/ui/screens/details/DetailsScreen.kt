@@ -255,7 +255,7 @@ private fun ListOfIngredients(
                         .data(getIngredientsImageURL(ingredientsNames[index]!!))
                         .crossfade(true)
                         .build(),
-                    contentDescription = null
+                    contentDescription = it
                 )
                 Spacer(modifier = modifier.width(8.dp))
                 Text(text = it, fontWeight = FontWeight.Bold)

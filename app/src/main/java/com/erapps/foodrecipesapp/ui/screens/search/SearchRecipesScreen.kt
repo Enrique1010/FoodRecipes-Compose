@@ -110,7 +110,9 @@ fun SearchBar(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -150,7 +152,6 @@ fun CustomTextField(
     TextField(
         modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
             .onFocusChanged { focused.value = it.isFocused }
             .focusRequester(focusRequester),
         value = value.value,

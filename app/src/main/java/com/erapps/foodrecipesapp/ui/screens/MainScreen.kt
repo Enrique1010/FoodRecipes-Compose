@@ -45,7 +45,7 @@ fun MainScreenContent() {
             }
         }
     ) {
-        NavGraph(navController)
+        NavGraph(navController = navController, paddingValues = it)
     }
 }
 

@@ -33,11 +33,10 @@ class DetailsScreenViewModel @Inject constructor(
 
         detailsRepository.getRecipeById(id).collect { result ->
             mapResultToUiState(result, _uiState) { response ->
-                val meal = response.meals?.get(0)
 
-                meal?.let {
-                    _ingredientsList.value = createIngredientsList(it).toMutableList()
-                    _uiState.value = UiState.Success(it)
+                response.meals?.get(0)?.let { meal ->
+                    _ingredientsList.value = createIngredientsList(meal).toMutableList()
+                    _uiState.value = UiState.Success(meal)
                 }
             }
         }
@@ -58,8 +57,9 @@ class DetailsScreenViewModel @Inject constructor(
             }
         }
 
-        ingredientsNames.addAll(listOfIngredients.filter { it!!.isNotEmpty() && it.isNotBlank() })
-        return listOfMeasures.zip(listOfIngredients) { measure, ingredient -> "$measure $ingredient" }
+        ingredientsNames.addAll(listOfIngredients)
+        ingredientsNames.removeIf { it.isNullOrEmpty() || it.isBlank() }
+        return listOfMeasures.zip(ingredientsNames) { measure, ingredient -> "${measure?.ifEmpty { " " } ?: " "} $ingredient" }
             .filter { it.isNotEmpty() && it.isNotBlank() }
     }
 

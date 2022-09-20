@@ -19,6 +19,10 @@ class SearchByCategoryScreenViewModel @Inject constructor(
     private val _uiState = mutableStateOf<UiState?>(null)
     val uiState: State<UiState?> = _uiState
 
+    init {
+        getRecipesByCategory("Beef")
+    }
+
     fun getRecipesByCategory(category: String) = viewModelScope.launch {
 
         categoryRepository.getRecipesByCategory(category).collect { result ->

@@ -1,6 +1,9 @@
 package com.erapps.foodrecipesapp.ui.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -12,22 +15,35 @@ import com.erapps.foodrecipesapp.ui.screens.random.RandomRecipeScreen
 import com.erapps.foodrecipesapp.ui.screens.search.SearchRecipesScreen
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
 
-    NavHost(navController = navController, startDestination = NavItem.Search.route) {
+    NavHost(
+        modifier = Modifier.padding(paddingValues),
+        navController = navController,
+        startDestination = NavItem.Search.route
+    ) {
         composable(NavItem.Search) {
-            SearchRecipesScreen(){
-                navController.navigate(NavItem.Details.createDetailsRoute(it))
+            SearchRecipesScreen() {
+                navController.navigate(NavItem.Details.createDetailsRoute(it)) {
+                    launchSingleTop = true
+                    restoreState = true
+                }
             }
         }
-        composable(NavItem.Category){
+        composable(NavItem.Category) {
             SearchRecipesByCategoryScreen() {
-                navController.navigate(NavItem.Details.createDetailsRoute(it))
+                navController.navigate(NavItem.Details.createDetailsRoute(it)) {
+                    launchSingleTop = true
+                    restoreState = true
+                }
             }
         }
-        composable(NavItem.Random){
+        composable(NavItem.Random) {
             RandomRecipeScreen() {
-                navController.navigate(NavItem.Details.createDetailsRoute(it))
+                navController.navigate(NavItem.Details.createDetailsRoute(it)) {
+                    launchSingleTop = true
+                    restoreState = true
+                }
             }
         }
         composable(NavItem.Details) {
